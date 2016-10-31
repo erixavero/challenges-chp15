@@ -34,7 +34,7 @@ public:
 	{ return sec; }
  };
 
-class MilTime : Time{
+class MilTime : public Time{
 	int milHours;
 	int milSeconds;
 	
@@ -44,7 +44,7 @@ public:
 		this->milSeconds= 0;
 	}
 	
-	MilTime(int milHrs, int milSec) : Time(h, m, s)
+	MilTime(int milHrs, int milSec): Time(hour, min, sec) 
 	{
 		if(milHrs<0 || milHrs>2359 || milSec<0 || milSec>59){
 			cout<<"INVALID INPUT"; exit(0);
@@ -55,39 +55,44 @@ public:
 		}
 	}
 	
-	setTime(int milHours, int milSeconds){
+	void setTime()
+	{
+
 		if(milHours>=1200){
-		h= milHours/100 -12;
-		m= milHours - (milHours/100)*100;
+		hour= milHours/100 -12;
+		min= milHours - (milHours/100)*100;
 		}
 		else if(milHours<1200){
-			h= milHours/100;
-			m= milHours - (milHours/100)*100;
+			hour= milHours/100;
+			min= milHours - (milHours/100)*100;
 		}
-		else if(milHour<100){
-			
+		else if(milHours<100){
+			milHours= min;
 		}
-		s= milSeconds;
+		sec= milSeconds;
 	}
 	
-	int getHour(){
+	int getMilHour(){
 		return milHours;
 	}
-	
-	int getStandHr(){
-		return 
-	}
+
 };
 
 int main(){
-//	int hour, second;
-//	cout<<"Insert military hour: ";
-//	cin>>hour;
-//	cout<<"Insert military second: ";
-//	cin>>second;	
+	int hour, second;
+	cout<<"Insert military hour: ";
+	cin>>hour;
+	cout<<"Insert military second: ";
+	cin>>second;	
 	
-	MilTime newTime(1234, 3);
-	cout<<getHour();
+	MilTime newTime(hour, second);
+	//cout<<getHour();
+	newTime.setTime();
 	
+	cout<<"Military time: "<<newTime.getMilHour()<<"."<<second <<endl;
+	cout<<"Standard time: "<<endl<<newTime.getHour()<<": ";
+	cout<<newTime.getMin()<<" : ";
+	cout<<newTime.getSec()<<endl;
 	return 0;
+	
 }
